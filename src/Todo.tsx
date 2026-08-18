@@ -43,31 +43,39 @@ const Todo = () => {
     }
   };
 
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleAdd();
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       {/* タスク一覧 */}
       <h2 className="font-bold">タスク一覧</h2>
-      {todos.length > 0 ? (
-        <ul className="mb-10">
-          {todos.map((todo) => (
-            <li key={todo.id} onClick={() => toggleTodo(todo.id)} className="flex">
-              <p
-                className={`${todo.completed ? "line-through" : ""} flex items-center justify-center px-20 bg-white text-black`}
-              >
-                {todo.name}
-              </p>
-              <button
-                onClick={() => removeTodo(todo.id)}
-                className="cursor-pointer text-red-300 px-3 bg-blue-800 p-2 text-yellow-300 rounded border"
-              >
-                ×
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>タスクが空です</p>
-      )}
+      <div className="flex border">
+        {todos.length > 0 ? (
+          <ul className="mb-10">
+            {todos.map((todo) => (
+              <li key={todo.id} onClick={() => toggleTodo(todo.id)} className="flex">
+                <p
+                  className={`${todo.completed ? "line-through" : ""} flex items-center justify-center px-20 bg-white text-black`}
+                >
+                  {todo.name}
+                </p>
+                <button
+                  onClick={() => removeTodo(todo.id)}
+                  className="cursor-pointer text-red-300 px-3 bg-blue-800 p-2 text-yellow-300 rounded border"
+                >
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>タスクが空です</p>
+        )}
+      </div>
 
       {/* タスク操作 */}
       <div>
@@ -75,6 +83,7 @@ const Todo = () => {
           type="text"
           value={input}
           onChange={handleText}
+          onKeyDown={handleEnter}
           className="border rounded text-white py-1 pr-1"
         />
         <button
